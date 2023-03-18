@@ -1,4 +1,4 @@
-name: lint-and-tests
+name: Lint Tests
 
 on: push
 
@@ -10,11 +10,8 @@ jobs:
       # Клонируем репозиторий
       - uses: actions/checkout@v3
       # Ставим зависимости
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          cache: 'npm'
-      - run: make install
+      - name: install dep
+        run: make install
       # Запускаем линтер
       - name: run lint
         run: make lint
@@ -24,7 +21,7 @@ jobs:
       - name: Test & publish code coverage
       #   # Publish code coverage on Code Climate
       #   # https://github.com/paambaati/codeclimate-action
-      - uses: paambaati/codeclimate-action@v3.0.0
+        uses: paambaati/codeclimate-action@v3.0.0
       #   # Add Code Climate secret key
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE }}
