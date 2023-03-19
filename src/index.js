@@ -1,15 +1,9 @@
-import fs from 'fs';
-import path from 'path';
 import _ from 'lodash';
-import { fileURLToPath } from 'url';
+import parse from './parsers.js';
 
 const gendiff = (file1, file2) => {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-
-  const data1 = JSON.parse(fs.readFileSync(getFixturePath(file1)));
-  const data2 = JSON.parse(fs.readFileSync(getFixturePath(file2)));
+  const data1 = parse(file1);
+  const data2 = parse(file2);
 
   const sortKeys = _.sortBy(_.union(Object.keys(data1), Object.keys(data2)));
 
@@ -35,5 +29,7 @@ const gendiff = (file1, file2) => {
   result.push('}');
   return result.join('');
 };
+
+// console.log(parsers('file1.json'))
 
 export default gendiff;

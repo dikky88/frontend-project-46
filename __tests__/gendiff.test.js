@@ -14,8 +14,21 @@ import gendiff from '../src/index.js';
 //   fileData2 = JSON.parse(fs.readFileSync(getFixturePath('file2.json')));
 // });
 
-test('gendiff', () => {
+test('gendiff json', () => {
   const data = gendiff('file1.json', 'file2.json');
+
+  expect(data).toEqual(`{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`);
+});
+
+test('gendiff yml', () => {
+  const data = gendiff('file1.yml', 'file2.yml');
 
   expect(data).toEqual(`{
   - follow: false
